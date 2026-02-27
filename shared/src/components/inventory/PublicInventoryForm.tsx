@@ -842,7 +842,7 @@ const removeBulkImage = (id: string) => {
                 const frontendUrl =
                   window.location.hostname === "localhost"
                     ? "http://localhost:3000"
-                    : "https://auction-frontend-bice.vercel.app"
+                    : "https://auction-frontend-six-beta.vercel.app/items"
 
                 window.location.href = `${frontendUrl}/items`
               }}
