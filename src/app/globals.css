@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@source "../../../shared/src/**/*.{ts,tsx}";
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(to bottom right, #f8fafc, #e0f2fe, #f1f5f9);
+  min-height: 100vh;
+}
+@layer base {
+  button {
+    @apply cursor-pointer;
+  }
+}
