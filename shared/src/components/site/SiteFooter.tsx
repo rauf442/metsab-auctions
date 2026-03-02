@@ -3,12 +3,10 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { getPublicBrandByCode, type BrandInfo } from '../../api/auctions-api'
-
 export interface FooterLinkGroup {
   title: string
   links: { label: string; href: string }[]
 }
-
 export interface SiteFooterTheme {
   bgClass: string
   borderClass: string
@@ -17,7 +15,6 @@ export interface SiteFooterTheme {
   inputClass: string
   buttonClass: string
 }
-
 export interface SiteFooterProps {
   linkGroups: FooterLinkGroup[]
   locations?: React.ReactNode
@@ -27,11 +24,9 @@ export interface SiteFooterProps {
   brandCopyright: string
   brandCode?: string
 }
-
 export function SiteFooter({ linkGroups, locations, social, newsletter = true, theme, brandCopyright, brandCode }: SiteFooterProps) {
   const [brandData, setBrandData] = useState<BrandInfo | null>(null)
   const [loading, setLoading] = useState(false)
-
   useEffect(() => {
     if (brandCode) {
       setLoading(true)
@@ -47,17 +42,14 @@ export function SiteFooter({ linkGroups, locations, social, newsletter = true, t
         })
     }
   }, [brandCode])
-
   // Dynamic location component based on brand data
   const DynamicLocations = () => {
     if (loading) {
       return <div className="text-sm opacity-70">Loading contact information...</div>
     }
-
     if (!brandData) {
       return locations || <div className="text-sm opacity-70">Contact information not available</div>
     }
-
     return (
       <div className="space-y-3 text-sm">
         {brandData.brand_address && (
@@ -66,7 +58,6 @@ export function SiteFooter({ linkGroups, locations, social, newsletter = true, t
             <div className="whitespace-pre-line">{brandData.brand_address}</div>
           </div>
         )}
-
         <div className="space-y-1">
           {brandData.contact_phone && (
             <div>
@@ -76,7 +67,6 @@ export function SiteFooter({ linkGroups, locations, social, newsletter = true, t
               </a>
             </div>
           )}
-
           {brandData.contact_email && (
             <div>
               <span className="font-medium">E: </span>
@@ -85,7 +75,6 @@ export function SiteFooter({ linkGroups, locations, social, newsletter = true, t
               </a>
             </div>
           )}
-
           {brandData.business_whatsapp_number && (
             <div>
               <span className="font-medium">WhatsApp: </span>
@@ -94,12 +83,10 @@ export function SiteFooter({ linkGroups, locations, social, newsletter = true, t
               </a>
             </div>
           )}
-
         </div>
       </div>
     )
   }
-
   // Static legal links (content is loaded from static HTML files)
   const getLegalLinks = () => {
     return [
@@ -108,7 +95,6 @@ export function SiteFooter({ linkGroups, locations, social, newsletter = true, t
       { label: 'Privacy Policy', href: '/privacy-policy' }
     ]
   }
-
   return (
     <footer className={`${theme.bgClass} ${theme.borderClass}`}>
       <div className={`container mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-4 gap-8 ${theme.textClass}`}>
@@ -140,22 +126,31 @@ export function SiteFooter({ linkGroups, locations, social, newsletter = true, t
         </div>
       </div>
       <div className={`border-t py-4 text-xs ${theme.textClass} ${theme.borderClass}`}>
-        <div className="container mx-auto px-4 flex flex-wrap items-center justify-between gap-3">
-          <div>© {new Date().getFullYear()} {brandCopyright}. All Rights Reserved.</div>
-          <div className="flex flex-wrap gap-3 justify-center md:justify-end">
-            {getLegalLinks().map((link, index) => (
-              <React.Fragment key={link.href}>
-                {index > 0 && <span className="hidden md:inline">|</span>}
-                <a href={link.href} className="hover:underline block md:inline">{link.label}</a>
-              </React.Fragment>
-            ))}
-          </div>
-        </div>
-      </div>
+  <div className="container mx-auto px-4 flex flex-wrap items-center justify-between gap-3">
+    <div className="whitespace-nowrap">
+      © {new Date().getFullYear()} {brandCopyright}. All Rights Reserved.
+    </div>
+    <div className="whitespace-nowrap text-black-300/50">
+      Developed and Managed by{' '}
+      
+       <a href="https://www.ahyconsulting.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-black-300/70 font-medium hover:text-black-300 hover:underline transition-colors" >
+        Ahy Consulting
+      </a>
+    </div>
+    <div className="flex flex-wrap gap-3 justify-center md:justify-end">
+      {getLegalLinks().map((link, index) => (
+        <React.Fragment key={link.href}>
+          {index > 0 && <span className="hidden md:inline">|</span>}
+          <a href={link.href} className="hover:underline block md:inline">{link.label}</a>
+        </React.Fragment>
+      ))}
+    </div>
+  </div>
+</div>
     </footer>
   )
 }
-
 export default SiteFooter
-
-
