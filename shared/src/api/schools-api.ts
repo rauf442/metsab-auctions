@@ -91,7 +91,7 @@ export class SchoolsAPI {
     return response.json();
   }
 
-  static async getSchools(filters: SchoolsFilters = {}): Promise<SchoolsResponse> {
+static async getSchools(filters: SchoolsFilters = {}): Promise<SchoolsResponse> {
     const params = new URLSearchParams();
     
     Object.entries(filters).forEach(([key, value]) => {
@@ -100,7 +100,9 @@ export class SchoolsAPI {
       }
     });
 
-    return this.makeRequest(`/schools?${params.toString()}`);
+    const token = localStorage.getItem('token');
+    const endpoint = token ? `/schools?${params.toString()}` : `/schools/public`;
+    return this.makeRequest(endpoint);
   }
 
   static async getSchool(id: string): Promise<SchoolResponse> {

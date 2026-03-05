@@ -90,7 +90,7 @@ export class ArtistsAPI {
     return response.json();
   }
 
-  static async getArtists(filters: ArtistsFilters = {}): Promise<ArtistsResponse> {
+static async getArtists(filters: ArtistsFilters = {}): Promise<ArtistsResponse> {
     const params = new URLSearchParams();
     
     Object.entries(filters).forEach(([key, value]) => {
@@ -99,7 +99,9 @@ export class ArtistsAPI {
       }
     });
 
-    return this.makeRequest(`/artists?${params.toString()}`);
+    const token = localStorage.getItem('token');
+    const endpoint = token ? `/artists?${params.toString()}` : `/artists/public`;
+    return this.makeRequest(endpoint);
   }
 
   static async getArtist(id: string): Promise<ArtistResponse> {
